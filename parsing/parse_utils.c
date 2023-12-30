@@ -1,0 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-akhd <mel-akhd@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/17 17:17:55 by mel-akhd          #+#    #+#             */
+/*   Updated: 2023/12/24 16:52:57 by mel-akhd         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+void	process_double_quotes(t_quotes_status *qt)
+{
+	if (!qt->in_single)
+		qt->in_dobule = !qt->in_dobule;
+}
+
+void	process_single_quotes(t_quotes_status *qt)
+{
+	if (!qt->in_dobule)
+		qt->in_single = !qt->in_single;
+}
+
+int	is_redirection(char *input)
+{
+	if (ft_strncmp(input, "<<", 2) == 0)
+		return (REDIR_HEREDOC);
+	if (ft_strncmp(input, ">>", 2) == 0)
+		return (REDIR_APPEND);
+	if (ft_strncmp(input, "<", 1) == 0)
+		return (REDIR_INPUT);
+	if (ft_strncmp(input, ">", 1) == 0)
+		return (REDIR_OUTPUT);
+	return (0);
+}
+
+void	skip_redirections(char **input)
+{
+	t_quotes_status	qt;
+
+	init_qt(&qt);
+	while (**input && is_redirection(*input))
+	{
+		while (**input == '>' || **input == '<')
+			(*input)++;
+		while (**input == ' ' || **input == '\t')
+			(*input)++;
+		proccess_both_quotes(**input, &qt);
+		(*input)++;
+		while (**input && !is_whit_sp(**input, qt.in_dobule, qt.in_single) 
+			&& **input != '<' && **input != '>')
+		{
+			proccess_both_quotes(**input, &qt);
+			(*input)++;
+		}
+		while (**input == ' ' || **input == '\t')
+			(*input)++;
+	}
+}
+
+int	is_valid_identifier_char(char c, int cur_i)
+{
+	return ((ft_isalnum(c) || c == '_') || 
+		((c == '@' || c == '!') && cur_i == 0));
+}
