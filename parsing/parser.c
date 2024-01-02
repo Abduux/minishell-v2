@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahraich <ahraich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 17:56:49 by mel-akhd          #+#    #+#             */
-/*   Updated: 2023/12/25 13:58:40 by ahraich          ###   ########.fr       */
+/*   Updated: 2023/12/30 16:56:52 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ t_input	*first_parse(char *input, t_data *data)
 {
 	t_input	*list;
 	t_input	*list_begin;
-	int		i;
 	t_input	*tmp;
 
-	i = 0;
 	list_begin = NULL;
 	list = NULL;
 	while (*input)

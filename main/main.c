@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahraich <ahraich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:16:40 by mel-akhd          #+#    #+#             */
-/*   Updated: 2023/12/25 12:42:37 by ahraich          ###   ########.fr       */
+/*   Updated: 2024/01/02 12:41:01 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ void	minishell(t_data *data)
 {
 	char	*input;
 	t_input	*input_list;
-	char	cwdir[PATH_MAX];
+	char* prompt = ANSI_COLOR_RED"Minishell: --> "ANSI_COLOR_RESET;
+	// char	cwdir[PATH_MAX];
 
-	printf("%s :", getcwd(cwdir , PATH_MAX));
-	input = readline(ANSI_COLOR_RED"Minishell: --> "ANSI_COLOR_RESET);
+	// printf("%s :", getcwd(cwdir , PATH_MAX));
+	//rl_set_pr
+	input = readline(prompt);
 	while (input != NULL)
 	{
 		data->syntax_error = 0;
@@ -28,8 +30,8 @@ void	minishell(t_data *data)
 		free(input);
 		execution (input_list, data);
 		parse_free(input_list);
-		printf("%s :", getcwd(cwdir , PATH_MAX));
-		input = readline(ANSI_COLOR_RED"Minishell: --> "ANSI_COLOR_RESET);
+		// printf("%s :", getcwd(cwdir , PATH_MAX));
+		input = readline(prompt);
 	}
 }
 

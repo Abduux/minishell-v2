@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils6.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-akhd <mel-akhd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:49:09 by mel-akhd          #+#    #+#             */
-/*   Updated: 2023/12/24 22:42:55 by mel-akhd         ###   ########.fr       */
+/*   Updated: 2023/12/31 20:18:32 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void copy_to_array(char **res_env, t_env *env, int count)
         while (current->name[length] != '\0')
             length++;
         length++;
-        while (current->value[value_length] != '\0')
+        while (current->value && current->value[value_length] != '\0')
             value_length++;
         length += value_length;
         res_env[i] = (char *)malloc(length+2);

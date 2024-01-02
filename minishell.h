@@ -1,10 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
+/*   Updated: 2024/01/02 12:43:43 by ali              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 #define MINISHELL_H
-#include "libft/libft.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <limits.h>
 
+# include <linux/limits.h>
+# include "libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 // ANSI escape code for red text
 #define ANSI_COLOR_RED "\x1b[31m\x1b[1m"
 // ANSI escape code to reset text color
@@ -52,6 +66,8 @@ typedef struct s_data
 
 
 
+char**  env_to_array(t_env *env);
+int run_cmd(t_input *input, t_data *data);
 int	to_join_values(char *key, int equal_index);
 void join_env(char* key, char* newvalue, t_data *data , int to_join);
 int exit_shell(t_data *data, t_input *input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahraich <ahraich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:11:51 by ahraich           #+#    #+#             */
-/*   Updated: 2023/12/25 12:59:27 by ahraich          ###   ########.fr       */
+/*   Updated: 2024/01/02 05:19:21 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void    display_export(t_env *env)
     while (tmp)
     {
         printf("declare -x %s", tmp->name);
-        if(tmp->value[0])
+        if(tmp->value)
             printf("=\"%s\"", tmp->value);
         printf("\n");
         tmp = tmp->next;
