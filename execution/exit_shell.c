@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:28:42 by ahraich           #+#    #+#             */
-/*   Updated: 2023/12/30 16:57:35 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/05 05:43:29 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void    free_exit(unsigned char status, t_data *data, t_input *input)
 int    exit_shell(t_data *data, t_input *input)
 {
     printf("exit\n");
-    free_exit(atoi(input->args[1]), data , input);
+    free_exit(0, data , input);
     return (0);
 }

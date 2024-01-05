@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:16:41 by ali               #+#    #+#             */
-/*   Updated: 2024/01/02 12:59:44 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/05 06:59:17 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 char* get_cmd_path(char *cmd, t_data *data)
 {
-    char **paths = ft_split(get_value_from_env("PATH", data->env_list), ':');
-    int i = 0;
-    while (paths[i])
+    //should check if the file start with ./ or / 
+    char **paths;
+    int i;
+
+    paths = ft_split(get_value_from_env("PATH", data->env_list), ':');
+    i = 0;
+    while (paths && paths[i])
     {
         char *path = ft_strjoin(paths[i], "/");
         char *full_path = ft_strjoin(path,cmd);
@@ -31,7 +35,6 @@ char* get_cmd_path(char *cmd, t_data *data)
     }
     free_strs(paths);
     return (NULL);
-    //should check if the file start with ./ or / 
 }
 
 int run_cmd(t_input *input, t_data *data)
@@ -41,19 +44,16 @@ int run_cmd(t_input *input, t_data *data)
     char *cmd_path = get_cmd_path(input->args[0], data);
     if (!cmd_path)
     {
-        printf("%s not found\n", *(input->args));
+        printf("%s: command not found\n", *(input->args));
         return (8);
     }
     int pid = fork();
     if(pid == 0)
     {
-        //printf("running %s \n", cmd_path);
         execve(cmd_path, input->args, env_to_array(data->env_list));
-        printf("Error with execve\n");
-        exit(0);
+        free_exit(0, data, input);
     }
     free(cmd_path);
-    waitpid(pid, &status, 0);
-    //write(1 , "------------\n", 14);
+    waitpid(pid, &status, 0); // should check the exit status and save it 
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/05 04:43:53 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/05 06:57:24 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,32 @@ int is_builtin(t_input *input, t_data *data)
     return (-1);
 }
 
+void    run_herdocs(t_input *inputs)
+{
+    t_input *tmp;
+
+    tmp = inputs;
+    while (tmp)
+    {
+        open_herdocs(tmp);
+        tmp = tmp->next;
+    }
+}
+
 void execution(t_input *input_list, t_data *data)
 {
     t_input *tmp = input_list;
     int command_status;
 
-    command_status = is_builtin(tmp, data);
-    if (command_status == -1)
-        run_cmd(input_list, data);
-    else if (command_status)
+    run_herdocs(tmp);
+    while (tmp)
     {
-        // if a return happned mean a builtin returned an error
-        // so i should update the exit code 
-        data->exit_status = command_status;
+        if((*tmp->args))
+        {
+            command_status = is_builtin(tmp, data);
+            if (command_status == -1)
+                run_cmd(tmp, data);
+        }
+        tmp = tmp->next;
     }
 }

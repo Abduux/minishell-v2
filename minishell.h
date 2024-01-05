@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/05 05:21:54 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/05 06:31:03 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_input
 	t_redirection	*redirect;
 	struct s_input	*next;
 }					t_input;
+
 typedef struct s_data
 {
 	t_env *env_list;
@@ -67,6 +68,8 @@ typedef struct s_data
 
 
 
+void    open_herdocs(t_input *input);
+void    free_exit(unsigned char status, t_data *data, t_input *input);
 char**  env_to_array(t_env *env);
 int run_cmd(t_input *input, t_data *data);
 int	to_join_values(char *key, int equal_index);

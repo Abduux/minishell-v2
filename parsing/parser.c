@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 17:56:49 by mel-akhd          #+#    #+#             */
-/*   Updated: 2024/01/05 05:31:45 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/05 06:58:32 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	print_parsed_list(t_input *list_begin)
 	i = 0;
 	while (list_begin)
 	{
-		ft_printf("\n");
+		//ft_printf("\n");
 		while (list_begin->args[i])
 		{
 			ft_printf("[%s]", list_begin->args[i]);

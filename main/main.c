@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:16:40 by mel-akhd          #+#    #+#             */
-/*   Updated: 2024/01/05 05:17:35 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/05 06:34:16 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	minishell(t_data *data)
 		input_list = parser(input, data);
 		add_history(input);
 		free(input);
-		execution (input_list, data);
+		if (input_list)
+			execution (input_list, data);
 		parse_free(input_list);
 		// printf("%s :", getcwd(cwdir , PATH_MAX));
 		input = readline(prompt);
