@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:16:40 by mel-akhd          #+#    #+#             */
-/*   Updated: 2024/01/02 12:41:01 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/05 05:17:35 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	minishell(t_data *data)
 	// char	cwdir[PATH_MAX];
 
 	// printf("%s :", getcwd(cwdir , PATH_MAX));
-	//rl_set_pr
 	input = readline(prompt);
 	while (input != NULL)
 	{

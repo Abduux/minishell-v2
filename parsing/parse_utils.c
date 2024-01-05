@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-akhd <mel-akhd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 17:17:55 by mel-akhd          #+#    #+#             */
-/*   Updated: 2023/12/24 16:52:57 by mel-akhd         ###   ########.fr       */
+/*   Updated: 2024/01/05 05:36:51 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	skip_redirections(char **input)
 
 int	is_valid_identifier_char(char c, int cur_i)
 {
-	return ((ft_isalnum(c) || c == '_') || 
+	return ((ft_isalnum(c) || c == '_') ||
 		((c == '@' || c == '!') && cur_i == 0));
 }

@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/02 05:16:38 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/05 04:43:53 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ void execution(t_input *input_list, t_data *data)
 
     command_status = is_builtin(tmp, data);
     if (command_status == -1)
-    {
-        printf("Try to run this command -> %s\n", *(tmp->args));
         run_cmd(input_list, data);
+    else if (command_status)
+    {
+        // if a return happned mean a builtin returned an error
+        // so i should update the exit code 
+        data->exit_status = command_status;
     }
 }

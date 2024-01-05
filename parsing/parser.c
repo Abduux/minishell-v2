@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 17:56:49 by mel-akhd          #+#    #+#             */
-/*   Updated: 2023/12/30 16:56:52 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/05 05:31:45 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ t_input	*first_parse(char *input, t_data *data)
 		list = (t_input *)malloc(sizeof(t_input));
 		if (list_begin)
 			tmp->next = list;
-		else 
+		else
 			list_begin = list;
-		list->next = 0;
+		list->next = NULL;
 		list->args = get_args(input);
 		list->redirect = get_redirections(input, data);
 		move_to_next_pipe(&input, data);
@@ -173,6 +173,6 @@ t_input	*parser(char *input, t_data *data)
 		parse_free(input_lst);
 		return (NULL);
 	}
-	//print_parsed_list(input_lst);
+	print_parsed_list(input_lst);
 	return (input_lst);
 }
