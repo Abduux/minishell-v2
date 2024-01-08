@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahraich <ahraich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:03 by ahraich           #+#    #+#             */
-/*   Updated: 2023/12/25 12:53:10 by ahraich          ###   ########.fr       */
+/*   Updated: 2024/01/08 13:22:54 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,5 @@ void join_env(char* key, char* newvalue, t_data *data , int to_join)
 	if(newvalue)
 		add_env(&data->env_list, key, joined_value);
 	add_export(&data->export_list, key, joined_value);
+	free(joined_value);
 }

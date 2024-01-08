@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:16:40 by mel-akhd          #+#    #+#             */
-/*   Updated: 2024/01/05 06:34:16 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/08 12:46:28 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	minishell(t_data *data)
 {
 	char	*input;
 	t_input	*input_list;
-	char* prompt = ANSI_COLOR_RED"Minishell: --> "ANSI_COLOR_RESET;
+	char* prompt = "╭─" ANSI_COLOR" Minishell v2.0$\n" ANSI_COLOR_RESET"╰────> ";
 	// char	cwdir[PATH_MAX];
 
 	// printf("%s :", getcwd(cwdir , PATH_MAX));

@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/06 19:23:25 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/08 12:47:04 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-
+// "\x1b[31m\x1b[1m" 
 // ANSI escape code for red text
-#define ANSI_COLOR_RED "\x1b[31m\x1b[1m"
+#define ANSI_COLOR "\x1b[1;34m"
 // ANSI escape code to reset text color
 #define ANSI_COLOR_RESET "\x1b[0m"
 
