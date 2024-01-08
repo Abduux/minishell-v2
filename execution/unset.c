@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahraich <ahraich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 09:46:25 by ahraich           #+#    #+#             */
-/*   Updated: 2023/12/25 13:13:36 by ahraich          ###   ########.fr       */
+/*   Updated: 2024/01/05 07:35:52 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int unset(t_data *data, t_input *input)//takes varaible names and removes them f
             delete_export(&data->export_list, input->args[index]);
         }
         else
-            printf("minishell: unset: `%s': not a valid identifier\n", input->args[index]);
+            ft_printf("minishell: unset: `%s': not a valid identifier\n", input->args[index]);
         index++;
     }
     return (0);

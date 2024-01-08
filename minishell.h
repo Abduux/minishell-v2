@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/05 06:31:03 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/06 19:23:25 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 #define REDIR_OUTPUT 2
 #define REDIR_HEREDOC 3
 #define REDIR_APPEND 4
+
 #define CMD_LEN 10
 
 typedef struct s_env
@@ -64,10 +65,13 @@ typedef struct s_data
 	t_env *export_list;
 	int	exit_status;
 	int syntax_error;
+	int	stdin;
+	int stdout;
+	int stderr;
 } t_data;
 
 
-
+void    redir(t_redirection *redirections);
 void    open_herdocs(t_input *input);
 void    free_exit(unsigned char status, t_data *data, t_input *input);
 char**  env_to_array(t_env *env);

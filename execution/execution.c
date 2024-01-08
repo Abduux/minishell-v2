@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/05 06:57:24 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/06 19:26:41 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void    run_herdocs(t_input *inputs)
         tmp = tmp->next;
     }
 }
+void    reset_fds(t_data *data);
+void    save_fds(t_data *data);
 
 void execution(t_input *input_list, t_data *data)
 {
@@ -49,14 +51,32 @@ void execution(t_input *input_list, t_data *data)
     int command_status;
 
     run_herdocs(tmp);
+    save_fds(data);
     while (tmp)
     {
         if((*tmp->args))
         {
+            // creat all files and change the FDs
+            redir(input_list->redirect);
             command_status = is_builtin(tmp, data);
             if (command_status == -1)
                 run_cmd(tmp, data);
+            reset_fds(data);
         }
         tmp = tmp->next;
     }
+}
+
+void    reset_fds(t_data *data)
+{
+    dup2(data->stdin, STDIN_FILENO);
+    dup2(data->stdout, STDOUT_FILENO);
+    dup2(data->stderr, STDERR_FILENO);
+}
+
+void    save_fds(t_data *data)
+{
+    data->stderr = dup(STDERR_FILENO);
+    data->stdin = dup(STDIN_FILENO);
+    data->stdout = dup(STDOUT_FILENO);
 }

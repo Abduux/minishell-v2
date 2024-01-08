@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 17:56:49 by mel-akhd          #+#    #+#             */
-/*   Updated: 2024/01/05 06:58:32 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/06 20:19:54 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,6 @@ t_input	*parser(char *input, t_data *data)
 		parse_free(input_lst);
 		return (NULL);
 	}
-	print_parsed_list(input_lst);
+	//print_parsed_list(input_lst);
 	return (input_lst);
 }
