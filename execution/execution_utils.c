@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:03 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/08 13:22:54 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/10 00:44:27 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,27 @@ int	valid_var_name(char *name)
 	return (1);
 }
 
-int	to_join_values(char *key, int equal_index)
+int	to_join_values(char *str, int equal_index)
 {
-	if(equal_index == (int)ft_strlen(key) - 1)
-		return(0);
-	return (1);
+	if(equal_index > 0 && str[equal_index - 1] == '+')
+		return 1;
+	return (0);
 }
 
-void join_env(char* key, char* newvalue, t_data *data , int to_join)
+void join_env(const char* key,const char* value, t_data *data , int to_join)
 {
 	char* joined_value;
 
 	if(!to_join)
 	{
-		if(newvalue)
-			add_env(&data->env_list, key, newvalue);
-		add_export(&data->export_list, key , newvalue);
+		if(value)
+			add_env(&data->env_list, key, value);
+		add_export(&data->export_list, key , value);
 		return;
 	}
-	joined_value = ft_strjoin(get_value_from_env(key, data->env_list), newvalue);
-	if(newvalue)
+	printf("joined the value\n");
+	joined_value = ft_strjoin(get_value_from_env(key, data->env_list), value);
+	if(value)
 		add_env(&data->env_list, key, joined_value);
 	add_export(&data->export_list, key, joined_value);
 	free(joined_value);

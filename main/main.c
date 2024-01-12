@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 18:16:40 by mel-akhd          #+#    #+#             */
-/*   Updated: 2024/01/08 12:46:28 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/09 22:01:52 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
+	data.env = env;
 	export = ft_strsdup(env);
 	data.env_list = get_env_list(env);
 	data.export_list = get_export_list(export);

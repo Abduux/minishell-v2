@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/06 19:26:41 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/12 18:02:29 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,32 @@ void execution(t_input *input_list, t_data *data)
 {
     t_input *tmp = input_list;
     int command_status;
+    int pipe_fd[2];
+    int piped;
 
     run_herdocs(tmp);
     save_fds(data);
+    piped = 0;
     while (tmp)
     {
         if((*tmp->args))
         {
-            // creat all files and change the FDs
-            redir(input_list->redirect);
+            redir(input_list->redirect); // creat all files and change the FDs
+            if(piped)// if piped means we need to change the fd for reading 
+            {
+                dup2(pipe_fd[0], STDIN_FILENO);
+                close(pipe_fd[0]);
+                piped = 0;
+            }
+            if(tmp->next && piped == 0) // if there is a next cmd --> means we need to pipe --> and change the output file descritor 
+            {
+                pipe(pipe_fd);
+                dup2(pipe_fd[1], STDOUT_FILENO);
+                close(pipe_fd[1]);
+                piped = 1;
+            }
             command_status = is_builtin(tmp, data);
-            if (command_status == -1)
+            if (command_status == -1) // run the comand but all pipes are closed 
                 run_cmd(tmp, data);
             reset_fds(data);
         }

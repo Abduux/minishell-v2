@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 18:33:20 by ali               #+#    #+#             */
-/*   Updated: 2024/01/06 19:42:35 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/08 14:15:06 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,15 @@ void    redir(t_redirection *redirections)
         }
         else if (redir->type == REDIR_INPUT)
         {
-            redirect_fd = open(redir->file_name , O_CREAT | O_RDONLY , 0644);
+            redirect_fd = open(redir->file_name , O_RDONLY);
             if(redirect_fd != -1)
                 change_stdio(redirect_fd, STDIN_FILENO);
+        }
+        else if(redir->type == REDIR_APPEND)
+        {
+            redirect_fd = open(redir->file_name , O_APPEND | O_CREAT | O_WRONLY, 0644);
+            if (redirect_fd != -1)
+                change_stdio(redirect_fd, STDOUT_FILENO);
         }
         redir = redir->next;
     }

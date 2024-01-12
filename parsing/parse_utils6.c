@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:49:09 by mel-akhd          #+#    #+#             */
-/*   Updated: 2023/12/31 20:18:32 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/10 20:15:02 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void cpy(char **res_env, int at, t_env *current)
 
 	j = 0;
 	k = 0;
-    while (current->name[j] != '\0')
+    while (current->name && current->name[j] != '\0')
 	{
         res_env[at][j] = current->name[j];
         j++;
     }
     res_env[at][j++] = '=';
-    while (current->value[k] != '\0')
+    while (current->value && current->value[k] != '\0')
 	{
         res_env[at][j + k] = current->value[k];
         k++;
@@ -48,29 +48,48 @@ void cpy(char **res_env, int at, t_env *current)
 void copy_to_array(char **res_env, t_env *env, int count)
 {
 	t_env	*current;
-	int		length;
-	int		value_length;
 	int		i;
 	
 	i = 0;
 	current = env;
-	length = 0;
-	value_length = 0;
-	while(i < count) {
-        length = 0;
-		value_length = 0;
-        while (current->name[length] != '\0')
-            length++;
-        length++;
-        while (current->value && current->value[value_length] != '\0')
-            value_length++;
-        length += value_length;
-        res_env[i] = (char *)malloc(length+2);
+	while(i < count)
+    {
+        res_env[i] = (char *)malloc(ft_strlen(current->name) + ft_strlen(current->value) +2);
 		cpy(res_env, i, current);
         current = current->next;
 		i++;
     }
+    
 }
+
+// void copy_to_array(char **res_env, t_env *env, int count)
+// {
+// 	t_env	*current;
+// 	int		length;
+// 	int		value_length;
+// 	int		i;
+	
+// 	i = 0;
+// 	current = env;
+// 	length = 0;
+// 	value_length = 0;
+// 	while(i < count)
+//     {
+//         length = 0;
+// 		value_length = 0;
+//         while (current->name[length] != '\0')
+//             length++;
+//         length++;
+//         while (current->value && current->value[value_length] != '\0')
+//             value_length++;
+//         length += value_length;
+//         res_env[i] = (char *)malloc(length+2);
+// 		cpy(res_env, i, current);
+//         current = current->next;
+// 		i++;
+//     }
+    
+// }
 
 char **from_list_to_array(t_env *env)
 {

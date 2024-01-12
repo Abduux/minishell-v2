@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/08 12:47:04 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/10 00:46:10 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_input
 
 typedef struct s_data
 {
+	char **env;
 	t_env *env_list;
 	t_env *export_list;
 	int	exit_status;
@@ -77,7 +78,7 @@ void    free_exit(unsigned char status, t_data *data, t_input *input);
 char**  env_to_array(t_env *env);
 int run_cmd(t_input *input, t_data *data);
 int	to_join_values(char *key, int equal_index);
-void join_env(char* key, char* newvalue, t_data *data , int to_join);
+void join_env(const char* key, const char* newvalue, t_data *data , int to_join);
 int exit_shell(t_data *data, t_input *input);
 int export(t_input *input, t_data *data);
 int	valid_var_name(char *name);

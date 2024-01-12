@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:16:41 by ali               #+#    #+#             */
-/*   Updated: 2024/01/08 13:26:45 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/09 22:08:20 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,18 @@ int run_cmd(t_input *input, t_data *data)
     int status;
 
     char *cmd_path = get_cmd_path(input->args[0], data);
-    printf("cmd path = %s\n", cmd_path);
     if (!cmd_path)
     {
         printf("%s: command not found\n", *(input->args));
-        return (8);
+        return (1);
     }
     int pid = fork();
     if(pid == 0)
     {
-        printf("Error Running '%s'\n", cmd_path);
-        execve(cmd_path, input->args, env_to_array(data->env_list));
+        // execve(cmd_path, input->args, env_to_array(data->env_list));
+        // execve(cmd_path, input->args, data->env);
+        execve(cmd_path, input->args, from_list_to_array(data->env_list));
+        printf(" ");
         free_exit(0, data, input);
     }
     free(cmd_path);

@@ -17,13 +17,13 @@ int    add_env(t_env **head, const char *name, const char *value)
 
     new_env = (t_env *)malloc(sizeof(t_env));
     last = *head;
-    if (!new_env) 
-    {
-        printf("Memory allocation failed\n");
-        return 0;
-    }
+    if (!new_env)
+        return(printf("Memory allocation failed\n"));
     new_env->name = ft_strdup(name);
-    new_env->value = ft_strdup(value);
+    if(!value)
+        new_env->value = NULL;
+    else
+        new_env->value = ft_strdup(value);
     new_env->next = NULL;
     delete_env(head, name);
     if (*head == NULL)
@@ -31,12 +31,10 @@ int    add_env(t_env **head, const char *name, const char *value)
     else 
     {
         while (last->next != NULL)
-        {
             last = last->next;
-        }
         last->next = new_env;
     }
-    return 1;
+    return 0;
 }
 
 void delete_env(t_env **head, const char *name)
