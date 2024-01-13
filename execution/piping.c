@@ -6,21 +6,17 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 18:08:58 by ali               #+#    #+#             */
-/*   Updated: 2024/01/13 15:44:46 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/13 17:16:16 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 int ft_pipe(int *pipe_fd, int *piped, t_input *current_cmd)
 {
     if (*piped == 1) // if piped means we need to change the fd for reading 
     {
         dup2(pipe_fd[0], STDIN_FILENO);
-        if(current_cmd->next)
-            ft_printf("%s STDIN = PIPE[0]\n", current_cmd->next->args[0]);
         close(pipe_fd[0]);
         *piped = 0;
     }
@@ -32,7 +28,6 @@ int ft_pipe(int *pipe_fd, int *piped, t_input *current_cmd)
             return (1);
         }
         dup2(pipe_fd[1], STDOUT_FILENO);
-        ft_printf("STDOUT = PIPE[1]\n");
         close(pipe_fd[1]);
         *piped = 1;
     }

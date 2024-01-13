@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/12 18:50:49 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/13 17:01:18 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_data
 
 
 int ft_pipe(int *pipe_fd, int *piped, t_input *current_cmd);
-void    redir(t_redirection *redirections);
+int    redir(t_redirection *redirections);
 void    open_herdocs(t_input *input);
 void    free_exit(unsigned char status, t_data *data, t_input *input);
 char**  env_to_array(t_env *env);

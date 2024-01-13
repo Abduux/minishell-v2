@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_s.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-akhd <mel-akhd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 23:19:04 by mel-akhd          #+#    #+#             */
-/*   Updated: 2023/02/18 17:40:36 by mel-akhd         ###   ########.fr       */
+/*   Updated: 2024/01/13 17:10:22 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	ft_printf_s(const char *s)
 	count = 0;
 	if (!s)
 	{
-		ft_putstr_fd("(null)", 1);
+		ft_putstr_fd("(null)", STDERR_FILENO);
 		return (6);
 	}
 	while (*s)
 	{
-		ft_putchar_fd(*s, 1);
+		ft_putchar_fd(*s, STDERR_FILENO);
 		s++;
 		count++;
 	}

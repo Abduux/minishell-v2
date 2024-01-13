@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 23:19:11 by mel-akhd          #+#    #+#             */
-/*   Updated: 2024/01/05 07:36:11 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/13 17:10:12 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_printf_all(const char *s, va_list va)
 	if (!*s)
 		return (0);
 	if (*s == 'c')
-		return (ft_putchar_fd((char)va_arg(va, int), 1));
+		return (ft_putchar_fd((char)va_arg(va, int), STDERR_FILENO));
 	else if (*s == 's')
 		return (ft_printf_s(va_arg(va, char *)));
 	else if (*s == 'p')
@@ -33,7 +33,7 @@ int	ft_printf_all(const char *s, va_list va)
 	else if (*s == 'X')
 		return (put_base_ul("0123456789ABCDEF", va_arg(va, unsigned int)));
 	else if (*s == '%')
-		return (ft_putchar_fd('%', 1));
+		return (ft_putchar_fd('%', STDERR_FILENO));
 	return (0);
 }
 
@@ -48,7 +48,7 @@ int	ft_printf(const char *format, ...)
 	{
 		if (*format != '%')
 		{
-			ft_putchar_fd(*format, 1);
+			ft_putchar_fd(*format, STDERR_FILENO);
 			count++;
 		}
 		else

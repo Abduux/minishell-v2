@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 18:33:20 by ali               #+#    #+#             */
-/*   Updated: 2024/01/08 14:15:06 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/13 17:01:36 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void change_stdio(int newfd, int to_change)
     close(newfd);
 }
 
-void    redir(t_redirection *redirections)
+int    redir(t_redirection *redirections)
 {
     t_redirection   *redir;
     int             redirect_fd;
@@ -36,6 +36,10 @@ void    redir(t_redirection *redirections)
         }
         else if (redir->type == REDIR_INPUT)
         {
+            if (access(redir->file_name , F_OK) != 0)
+                return(ft_printf("Minishell: %s: No such file or directory\n", redir->file_name));
+            if (access(redir->file_name, X_OK) != 0)
+                return(ft_printf("Minishell: %s: Permission denied\n", redir->file_name));
             redirect_fd = open(redir->file_name , O_RDONLY);
             if(redirect_fd != -1)
                 change_stdio(redirect_fd, STDIN_FILENO);
@@ -48,4 +52,5 @@ void    redir(t_redirection *redirections)
         }
         redir = redir->next;
     }
+    return (0);
 }

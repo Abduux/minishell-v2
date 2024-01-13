@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/13 16:28:02 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/13 16:30:07 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void execution(t_input *input_list, t_data *data)
 
 void    reset_fds(t_data *data)
 {
-    ft_printf("RESET ALL FDs to Default\n");
     dup2(data->stdin, STDIN_FILENO);
     dup2(data->stdout, STDOUT_FILENO);
     dup2(data->stderr, STDERR_FILENO);
