@@ -6,14 +6,13 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 06:06:17 by ali               #+#    #+#             */
-/*   Updated: 2024/01/09 21:55:17 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/17 01:06:19 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// > reads 
-// echo file > folder  | echo again << new
+
 void    open_herdocs(t_input *input)
 {
     t_redirection   *tmp_red;
@@ -33,5 +32,17 @@ void    open_herdocs(t_input *input)
             free(line);
         }
         tmp_red = tmp_red->next;
+    }
+}
+
+void    run_herdocs(t_input *inputs)
+{
+    t_input *tmp;
+
+    tmp = inputs;
+    while (tmp)
+    {
+        open_herdocs(tmp);
+        tmp = tmp->next;
     }
 }

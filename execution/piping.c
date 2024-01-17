@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 18:08:58 by ali               #+#    #+#             */
-/*   Updated: 2024/01/13 17:16:16 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/16 22:46:29 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int ft_pipe(int *pipe_fd, int *piped, t_input *current_cmd)
     }
     return (0);
 }
+
 //echo text here is about to get piped to the next comand | grep is > output.txt
 /*
 

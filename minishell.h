@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/13 17:01:18 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/17 01:06:39 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,14 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-// "\x1b[31m\x1b[1m" 
-// ANSI escape code for red text
-#define ANSI_COLOR "\x1b[1;34m"
-// ANSI escape code to reset text color
-#define ANSI_COLOR_RESET "\x1b[0m"
+#include <signal.h>
 
+#define ANSI_COLOR "\x1b[1;34m"
+#define ANSI_COLOR_RESET "\x1b[0m"
 #define REDIR_INPUT 1
 #define REDIR_OUTPUT 2
 #define REDIR_HEREDOC 3
 #define REDIR_APPEND 4
-
 #define CMD_LEN 10
 
 typedef struct s_env
@@ -72,6 +69,14 @@ typedef struct s_data
 } t_data;
 
 
+
+extern int	signal = -1;
+
+void    run_herdocs(t_input *inputs);
+void    reset_fds(t_data *data);
+void    save_fds(t_data *data);
+void	display_prompt(t_data *data);
+void    handle_signals(int  the_signal);
 int ft_pipe(int *pipe_fd, int *piped, t_input *current_cmd);
 int    redir(t_redirection *redirections);
 void    open_herdocs(t_input *input);
