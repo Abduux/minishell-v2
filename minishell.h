@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/17 01:06:39 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/17 03:19:53 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ typedef struct s_data
 
 
 
-extern int	signal = -1;
+//int	signal_recieved_ = -1;
 
+void	display_prompt(t_data *data);
 void    run_herdocs(t_input *inputs);
 void    reset_fds(t_data *data);
 void    save_fds(t_data *data);
@@ -142,5 +143,8 @@ int		echo(char **args);
 int		cd(t_input cmd, t_data *data);
 int		pwd(void);
 int		env(t_env *env);
+void	set_data(char **env, t_data *data);
+void	silent(char **av, int ac);
+void 	set_sigaction(struct sigaction *sa);
 
 #endif 
