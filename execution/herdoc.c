@@ -6,12 +6,11 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 06:06:17 by ali               #+#    #+#             */
-/*   Updated: 2024/01/17 01:06:19 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/23 02:43:53 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 void    open_herdocs(t_input *input)
 {
@@ -40,7 +39,7 @@ void    run_herdocs(t_input *inputs)
     t_input *tmp;
 
     tmp = inputs;
-    while (tmp)
+    while (tmp) // for every cmd should save last herdoc opned 
     {
         open_herdocs(tmp);
         tmp = tmp->next;

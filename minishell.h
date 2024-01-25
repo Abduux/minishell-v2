@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/17 03:19:53 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/25 20:29:03 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 #include <signal.h>
+# include <termios.h>
+
+extern int	g_signal;
 
 #define ANSI_COLOR "\x1b[1;34m"
 #define ANSI_COLOR_RESET "\x1b[0m"
@@ -28,6 +31,9 @@
 #define REDIR_HEREDOC 3
 #define REDIR_APPEND 4
 #define CMD_LEN 10
+#define PROMPT ANSI_COLOR"Minishell v2.0$" ANSI_COLOR_RESET" ─> "
+//char* prompt = "╭─" ANSI_COLOR" Minishell v2.0$\n" ANSI_COLOR_RESET"╰────> ";
+// char* prompt = ANSI_COLOR" Minishell v2.0$" ANSI_COLOR_RESET" ─> ";
 
 typedef struct s_env
 {
@@ -58,28 +64,26 @@ typedef struct s_input
 
 typedef struct s_data
 {
-	char **env;
-	t_env *env_list;
-	t_env *export_list;
-	int	exit_status;
-	int syntax_error;
-	int	stdin;
-	int stdout;
-	int stderr;
-} t_data;
+	char			**env;
+	struct termios	term_attr;
+	t_env			*env_list;
+	t_env			*export_list;
+	int				exit_status;
+	int 			syntax_error;
+	int				stdin;
+	int 			stdout;
+	int 			stderr;
+}	t_data;
 
-
-
-//int	signal_recieved_ = -1;
-
+void	init_data(char **env, t_data *data);
 void	display_prompt(t_data *data);
 void    run_herdocs(t_input *inputs);
 void    reset_fds(t_data *data);
 void    save_fds(t_data *data);
 void	display_prompt(t_data *data);
-void    handle_signals(int  the_signal);
-int ft_pipe(int *pipe_fd, int *piped, t_input *current_cmd);
-int    redir(t_redirection *redirections);
+void    handle_signals(void);
+int 	ft_pipe(int *pipe_fd, int *piped, t_input *current_cmd);
+int    	redir(t_redirection *redirections);
 void    open_herdocs(t_input *input);
 void    free_exit(unsigned char status, t_data *data, t_input *input);
 char**  env_to_array(t_env *env);
@@ -143,8 +147,5 @@ int		echo(char **args);
 int		cd(t_input cmd, t_data *data);
 int		pwd(void);
 int		env(t_env *env);
-void	set_data(char **env, t_data *data);
-void	silent(char **av, int ac);
-void 	set_sigaction(struct sigaction *sa);
 
 #endif 

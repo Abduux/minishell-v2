@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahraich <ahraich@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:39:54 by ahraich           #+#    #+#             */
-/*   Updated: 2023/12/23 08:39:24 by ahraich          ###   ########.fr       */
+/*   Updated: 2024/01/21 02:05:02 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ int	cd(t_input cmd, t_data *data)
 		printf("minishell: cd: too many arguments\n");
 	else
 		change_dir(cmd.args[1], data);
-	return (1);
+	return (0);
 }
