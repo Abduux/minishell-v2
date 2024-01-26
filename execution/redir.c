@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 18:33:20 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 01:50:43 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 03:20:42 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ int    redir(t_redirection *redirections)
     redirect_fd = -1;
     while (redir)
     {
-        if(redir->type == REDIR_OUTPUT)
+        if (redir->type == REDIR_HEREDOC)
+        {
+            change_stdio(redir->pipe[0], STDIN_FILENO);
+        }
+        else if(redir->type == REDIR_OUTPUT)
         {
             redirect_fd = open(redir->file_name , O_CREAT  | O_WRONLY | O_TRUNC, 0644);
             if(redirect_fd != -1)

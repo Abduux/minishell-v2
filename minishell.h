@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 01:50:26 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 03:18:24 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ typedef struct s_data
 
 void	init_data(char **env, t_data *data);
 void	display_prompt(t_data *data);
-void    run_herdocs(t_input *inputs, t_data *data);
+int    run_herdocs(t_input *inputs, t_data *data);
 void    reset_fds(t_data *data);
 void    save_fds(t_data *data);
 void	display_prompt(t_data *data);
 void    handle_signals(void);
 int 	ft_pipe(int *pipe_fd, int *piped, t_input *current_cmd);
 int    	redir(t_redirection *redirections);
-void    open_herdocs(t_input *input, t_data *data);
+int    open_herdocs(t_input *input, t_data *data);
 void    free_exit(unsigned char status, t_data *data, t_input *input);
 char**  env_to_array(t_env *env);
 int run_cmd(t_input *input, t_data *data);
