@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 01:14:33 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 00:59:47 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 04:14:54 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	display_prompt(t_data *data)
 	input = readline(PROMPT);
 	while (input != NULL)
 	{
-		printf("input = '%s' \n", input);
-		g_signal = -1;
 		tcsetattr(STDIN_FILENO, TCSANOW, &data->term_attr);
 		data->syntax_error = 0;
 		input_list = parser(input, data);
