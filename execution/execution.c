@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/26 07:46:31 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 08:18:17 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void execution(t_input *input_list, t_data *data)
             redir(tmp->redirect); // creat all files and change the FDs
             command_status = is_builtin(tmp, data);
             if (command_status == -1) // run the comand but all pipes are closed 
-                run_cmd(tmp, data, pipe_fd, piped);
+                run_cmd(tmp, data, pipe_fd);
             reset_fds(data);
         }
         tmp = tmp->next;
@@ -73,7 +73,7 @@ void execution(t_input *input_list, t_data *data)
 
 void    reset_fds(t_data *data)
 {
-    ft_printf("Reseting ...\n");
+    //ft_printf("Reseting ...\n");
     dup2(data->stdin, STDIN_FILENO);
     dup2(data->stdout, STDOUT_FILENO);
     dup2(data->stderr, STDERR_FILENO);

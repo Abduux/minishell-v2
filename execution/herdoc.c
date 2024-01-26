@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 06:06:17 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 03:52:54 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 16:38:58 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int    run_herdocs(t_input *inputs, t_data *data)
     return (0);
 }
 
+
+
 int save_herdoc_data(t_redirection *herdoc, t_data *data, t_input *input)
 {
     pid_t   pid;
@@ -80,6 +82,7 @@ int save_herdoc_data(t_redirection *herdoc, t_data *data, t_input *input)
         char *line = readline("> ");
         while (ft_strncmp(line, herdoc->file_name, INT_MAX) != 0)
         {
+            line = evaluate(line, data, IS_INSIDE_HERDOC); // Ark :: Added by me, just in case
             write(herdoc->pipe[1], line, ft_strlen(line));
             write(herdoc->pipe[1], "\n", 2);
             free(line);

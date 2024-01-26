@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:16:41 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 08:08:40 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 21:21:31 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int run_cmd(t_input *input, t_data *data, int *pipe_fd)
     int     pid;
 
     cmd_path = get_cmd_path(input->args[0], data);
-    (void)piped;
     if (!cmd_path)
     {
         ft_printf("%s: command not found\n", *(input->args));
@@ -57,16 +56,18 @@ int run_cmd(t_input *input, t_data *data, int *pipe_fd)
         return(ft_printf("minishell : could not fork\n"));
     if(pid == 0)
     {
-        close(pipe_fd[1]);
         close(pipe_fd[0]);
-        ft_printf("excuting [%s]...\n", cmd_path);
+        //ft_printf("Excuting : '%s'", cmd_path);
         execve(cmd_path, input->args, from_list_to_array(data->env_list));
         ft_printf("Error Excuting : '%s'", cmd_path);
         free_exit(0, data, input);
     }
-    close(pipe_fd[1]);
     free(cmd_path);
-    wait(&status); // should check the exit status and save it 
-    ft_printf("waited ...\n");
-    return (0);
+    waitpid(pid, &status, 0);
+    // wait(&status); // should check the exit status and save it 
+    
+    //ft_printf("waited ...\n");
+    return (set_exit_status(&data->env_list, WTERMSIG(status))); // Ark :: Added by me, just in case
+    
 }
+

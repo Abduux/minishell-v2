@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 08:08:50 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 16:38:39 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ extern int	g_signal;
 
 #define ANSI_COLOR "\x1b[1;34m"
 #define ANSI_COLOR_RESET "\x1b[0m"
+#define IS_INSIDE_HERDOC -1
 #define REDIR_INPUT 1
 #define REDIR_OUTPUT 2
 #define REDIR_HEREDOC 3

@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 17:17:55 by mel-akhd          #+#    #+#             */
-/*   Updated: 2024/01/05 07:09:02 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 15:56:00 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ void	skip_redirections(char **input)
 int	is_valid_identifier_char(char c, int cur_i)
 {
 	return ((ft_isalnum(c) || c == '_') ||
-		((c == '@' || c == '!') && cur_i == 0));
+		((c == '@' || c == '!' || c == '?') && cur_i == 0));
 }

@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:43:38 by mel-akhd          #+#    #+#             */
-/*   Updated: 2024/01/26 01:21:08 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 16:38:47 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	should_expand(char *c, int in_single_quotes, int re_type)
 {
 	return (*(c + 1) && *c == '$' && *(c + 1) != '$' && *(c + 1) != ' ' 
 		&& *(c + 1) != '"' && *(c + 1) 
-		!= '\'' && *(c + 1) != '+' && *(c + 1) != '!' 
-		&& !in_single_quotes && re_type != REDIR_HEREDOC);
+		!= '\'' && *(c + 1) != '+'
+		&& (re_type == IS_INSIDE_HERDOC || (!in_single_quotes && re_type != REDIR_HEREDOC)));
 }
 
 int	expand(char	**word, int len, char **result, t_data *data)
