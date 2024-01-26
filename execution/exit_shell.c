@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:28:42 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/21 02:06:16 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 02:13:31 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void    free_exit(unsigned char status, t_data *data , t_input *input)
 {
     free_env_list(data->env_list);
 	free_env_list(data->export_list);
-    free_strs(input->args);
-    free(input->redirect);
+    parse_free(input);
+    clear_history();
     exit(status);
 }
 

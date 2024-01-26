@@ -1,6 +1,6 @@
 SRC =  $(shell find . -type f -name "*.c")
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address 
 
 all: 
 	@$(MAKE) -C libft

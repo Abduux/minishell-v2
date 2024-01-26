@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/17 01:06:29 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 01:15:22 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void execution(t_input *input_list, t_data *data)
     int pipe_fd[2];
     int piped;
 
-    run_herdocs(tmp);
+    run_herdocs(tmp, data);
     save_fds(data);
     piped = 0;
     while (tmp)

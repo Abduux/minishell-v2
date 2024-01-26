@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 18:33:20 by ali               #+#    #+#             */
-/*   Updated: 2024/01/13 17:01:36 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 01:50:43 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,23 @@ int    redir(t_redirection *redirections)
     }
     return (0);
 }
+
+
+
+// cmd > slkjdf < slkjdflk > slkjdflk >> lsjkdf << her << another | sldjf lk
+
+
+
+// [0] -> her pip[0] 
+// [1] -> lsjkdf 
+// [2] -> terminal 
+
+// echo hello > file.txt > anothe.txt
+
+
+
+// lien = readline()
+// {
+//     line = signal = sigint; 
+//     return *
+// } 
