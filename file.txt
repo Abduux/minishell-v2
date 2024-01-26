@@ -1,7 +1,0 @@
-void join_env(const char* key, const char* newvalue, t_data *data , int to_join);
-void copy_char_to_string(char *str, char c, int *at);
-void	move_ptr_to_redir(char **input, int *redir, t_quotes_status *qt);
-void	print_env_list(t_env *env);
-void	print_export_list(t_env *export);
-void	print_env_array(char** env);
-int		pwd(void);
