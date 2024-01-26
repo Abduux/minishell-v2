@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 01:14:33 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 04:14:54 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 04:48:47 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	display_prompt(t_data *data)
 	clear_history();
     free_env_list(data->env_list);
 	free_env_list(data->export_list);
-	printf("EOF should clean everything here\n");
+	//printf("EOF should clean everything here\n");
 }

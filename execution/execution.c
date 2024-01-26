@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/26 03:52:36 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 07:46:31 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int is_builtin(t_input *input, t_data *data)
 {
     if (ft_strncmp(*input->args , "echo", CMD_LEN) == 0)
-        return (echo(input->args));
+        return (echo(input->args , data));
     else if (ft_strncmp(*input->args , "cd", CMD_LEN) == 0)
         return (cd(*input, data));
     else if (ft_strncmp(*input->args , "pwd", CMD_LEN) == 0)
@@ -31,6 +31,21 @@ int is_builtin(t_input *input, t_data *data)
     return (-1);
 }
 
+// cmd -> cmd2 -> cmd3 
+
+// [t]  | input  (not piped && next) 
+// [p]  | output
+// [t]  | error
+
+// [p]  | input  (piped && next)
+// [p2]  | output
+// [t]  | error
+
+// [p2]  | input (piped > !next)
+// [t]  | output
+// [t]  | error
+
+
 void execution(t_input *input_list, t_data *data)
 {
     t_input *tmp = input_list;
@@ -39,9 +54,8 @@ void execution(t_input *input_list, t_data *data)
     int piped;
 
     piped = 0;
-    save_fds(data); // save default fds
     if(run_herdocs(tmp, data) != 0)
-        return ;
+        return;
     while (tmp)
     {
         if((*tmp->args))
@@ -50,7 +64,7 @@ void execution(t_input *input_list, t_data *data)
             redir(tmp->redirect); // creat all files and change the FDs
             command_status = is_builtin(tmp, data);
             if (command_status == -1) // run the comand but all pipes are closed 
-                run_cmd(tmp, data);
+                run_cmd(tmp, data, pipe_fd, piped);
             reset_fds(data);
         }
         tmp = tmp->next;
@@ -59,9 +73,11 @@ void execution(t_input *input_list, t_data *data)
 
 void    reset_fds(t_data *data)
 {
+    ft_printf("Reseting ...\n");
     dup2(data->stdin, STDIN_FILENO);
     dup2(data->stdout, STDOUT_FILENO);
     dup2(data->stderr, STDERR_FILENO);
+    
 }
 
 void    save_fds(t_data *data)

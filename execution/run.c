@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:16:41 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 02:08:45 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 08:08:40 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ char* get_cmd_path(const char *cmd, t_data *data)
     return (NULL);
 }
 
-int run_cmd(t_input *input, t_data *data)
+int run_cmd(t_input *input, t_data *data, int *pipe_fd)
 {
     int     status;
     char*   cmd_path;
     int     pid;
 
     cmd_path = get_cmd_path(input->args[0], data);
+    (void)piped;
     if (!cmd_path)
     {
         ft_printf("%s: command not found\n", *(input->args));
@@ -56,11 +57,16 @@ int run_cmd(t_input *input, t_data *data)
         return(ft_printf("minishell : could not fork\n"));
     if(pid == 0)
     {
+        close(pipe_fd[1]);
+        close(pipe_fd[0]);
+        ft_printf("excuting [%s]...\n", cmd_path);
         execve(cmd_path, input->args, from_list_to_array(data->env_list));
         ft_printf("Error Excuting : '%s'", cmd_path);
         free_exit(0, data, input);
     }
+    close(pipe_fd[1]);
     free(cmd_path);
-    waitpid(pid, &status, 0); // should check the exit status and save it 
+    wait(&status); // should check the exit status and save it 
+    ft_printf("waited ...\n");
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 03:18:24 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 08:08:50 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_data
 	int 			stderr;
 }	t_data;
 
+int		set_exit_status(t_env **head, int exit_status);
 void	init_data(char **env, t_data *data);
 void	display_prompt(t_data *data);
 int    run_herdocs(t_input *inputs, t_data *data);
@@ -88,7 +89,9 @@ int    	redir(t_redirection *redirections);
 int    open_herdocs(t_input *input, t_data *data);
 void    free_exit(unsigned char status, t_data *data, t_input *input);
 char**  env_to_array(t_env *env);
-int run_cmd(t_input *input, t_data *data);
+
+int run_cmd(t_input *input, t_data *data, int *pipe_fd);
+
 int	to_join_values(char *key, int equal_index);
 void join_env(const char* key, const char* newvalue, t_data *data , int to_join);
 int exit_shell(t_data *data, t_input *input);
@@ -144,7 +147,7 @@ int     add_export(t_env **head, const char *name, const char *value);
 void	delete_export(t_env **head, const char *name);
 void	increase_shlvl(t_env *list);
 void	free_env_list(t_env *head);
-int		echo(char **args);
+int		echo(char **args, t_data *data);
 int		cd(t_input cmd, t_data *data);
 int		pwd(void);
 int		env(t_env *env);

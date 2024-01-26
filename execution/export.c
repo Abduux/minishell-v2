@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:11:51 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/10 00:45:57 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/26 05:21:24 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void add_variable(char *str , t_data *data)
     name = cut_name(str, &value_index);
     value = cutvalue(str , value_index);
     if (!valid_var_name(name))
-        printf("minishell: export: `%s': not a valid identifier\n", str);
+        ft_printf("minishell: export: `%s': not a valid identifier\n", str);
     else
         join_env(name, value, data, to_join_values(str, value_index));
     free(name);
@@ -103,5 +103,5 @@ int export(t_input *input, t_data *data)
             i++;
         }
     }
-    return (0);
+    return (set_exit_status(&data->env_list, 0));
 }
