@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/28 11:29:45 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 11:43:43 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ int   is_builtin(t_input *input) // returns 1 if the cmd is a built in
 
 int	run_a_builtin(t_input *input, t_data *data) // forks the minishell and excute the 
 {
+	if(ft_strncmp(*input->args, "exit", INT_MAX) == 0)
+		exit_shell(data, input);
 	pid_t child_pid = fork();
 	int status ;
-	
+
 	if(child_pid == -1)
 		return (-1);
 	if(child_pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		redir(input->redirect);
 		status = excute_builtin(input, data);
 		exit(status);
 	}
@@ -80,14 +82,13 @@ void execution(t_input *input_list, t_data *data)
         if((*tmp->args))
         {
 			ft_pipe(pipe_fd, &piped, tmp);
-			redir(tmp->redirect);
-            signal(SIGINT, dont_quit);
 			if(is_builtin(tmp))
 				cmds_pids[index] = run_a_builtin(tmp, data);
 			else
 				cmds_pids[index] = run_cmd(tmp, data);
+			reset_fds(data);
+			index++;
         }
-        reset_fds(data);
         tmp = tmp->next;
     }
     for(int i = 0; i < index; i++)
