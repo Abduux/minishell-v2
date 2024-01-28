@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 03:19:06 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 20:54:22 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 02:44:20 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_data(char **env, t_data *data)
 	char **export;
 
 	save_fds(data);
-	//tcgetattr(STDIN_FILENO , &data->term_attr);
+	tcgetattr(STDIN_FILENO , &data->term_attr);
 	data->env = env;
 	export = ft_strsdup(env);
 	data->env_list = get_env_list(env);

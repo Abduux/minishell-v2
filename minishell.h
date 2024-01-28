@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/27 05:26:15 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 02:43:21 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <termios.h>
 
 extern int	g_signal;
-extern int 	g_pipe[2];
 
 #define ANSI_COLOR "\x1b[1;34m"
 #define ANSI_COLOR_RESET "\x1b[0m"
@@ -33,7 +32,9 @@ extern int 	g_pipe[2];
 #define REDIR_HEREDOC 3
 #define REDIR_APPEND 4
 #define CMD_LEN 10
-#define PROMPT ANSI_COLOR"Minishell v2.0$" ANSI_COLOR_RESET" ─> "
+// #define PROMPT ANSI_COLOR"Minishell v2.0$" ANSI_COLOR_RESET" ─> "
+#define PROMPT "╭─" ANSI_COLOR" Minishell v2.0$\n" ANSI_COLOR_RESET"╰────> "
+
 //char* prompt = "╭─" ANSI_COLOR" Minishell v2.0$\n" ANSI_COLOR_RESET"╰────> ";
 // char* prompt = ANSI_COLOR" Minishell v2.0$" ANSI_COLOR_RESET" ─> ";
 

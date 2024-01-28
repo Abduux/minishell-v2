@@ -6,13 +6,11 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/27 05:51:29 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 02:00:53 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int g_pipe[2] = {-1};
 
 int is_builtin(t_input *input, t_data *data)
 {
