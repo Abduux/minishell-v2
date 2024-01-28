@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:16:41 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 21:21:31 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/27 05:48:30 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ char* get_cmd_path(const char *cmd, t_data *data)
     return (NULL);
 }
 
-int run_cmd(t_input *input, t_data *data, int *pipe_fd)
+int run_cmd(t_input *input, t_data *data, int *pipe_fd, int *piped)
 {
-    int     status;
     char*   cmd_path;
-    int     pid;
+    pid_t   pid;
 
     cmd_path = get_cmd_path(input->args[0], data);
     if (!cmd_path)
@@ -51,23 +50,36 @@ int run_cmd(t_input *input, t_data *data, int *pipe_fd)
         ft_printf("%s: command not found\n", *(input->args));
         return (1);
     }
+    if(*piped == 1)
+    {
+        dup2(pipe_fd[0], STDIN_FILENO);
+        close(pipe_fd[0]);
+    }
+    if(input->next)
+    {
+        pipe(pipe_fd);
+        *piped = 1;
+    }
     pid = fork();
     if(pid == -1)
         return(ft_printf("minishell : could not fork\n"));
     if(pid == 0)
     {
+        dup2(pipe_fd[1], STDOUT_FILENO);
+        close(pipe_fd[1]);
         close(pipe_fd[0]);
-        //ft_printf("Excuting : '%s'", cmd_path);
+        redir(input->redirect);
         execve(cmd_path, input->args, from_list_to_array(data->env_list));
         ft_printf("Error Excuting : '%s'", cmd_path);
         free_exit(0, data, input);
     }
+    else 
+    {
+        close(pipe_fd[1]);
+        reset_fds(data);
+    }
     free(cmd_path);
-    waitpid(pid, &status, 0);
-    // wait(&status); // should check the exit status and save it 
-    
-    //ft_printf("waited ...\n");
-    return (set_exit_status(&data->env_list, WTERMSIG(status))); // Ark :: Added by me, just in case
+    return (pid);
     
 }
 

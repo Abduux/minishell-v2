@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 16:38:39 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/27 05:26:15 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <termios.h>
 
 extern int	g_signal;
+extern int 	g_pipe[2];
 
 #define ANSI_COLOR "\x1b[1;34m"
 #define ANSI_COLOR_RESET "\x1b[0m"
@@ -91,7 +92,7 @@ int    open_herdocs(t_input *input, t_data *data);
 void    free_exit(unsigned char status, t_data *data, t_input *input);
 char**  env_to_array(t_env *env);
 
-int run_cmd(t_input *input, t_data *data, int *pipe_fd);
+int run_cmd(t_input *input, t_data *data, int *pipe_fd, int *piped);
 
 int	to_join_values(char *key, int equal_index);
 void join_env(const char* key, const char* newvalue, t_data *data , int to_join);

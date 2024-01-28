@@ -6,11 +6,13 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/26 08:18:17 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/27 05:51:29 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int g_pipe[2] = {-1};
 
 int is_builtin(t_input *input, t_data *data)
 {
@@ -31,27 +33,14 @@ int is_builtin(t_input *input, t_data *data)
     return (-1);
 }
 
-// cmd -> cmd2 -> cmd3 
-
-// [t]  | input  (not piped && next) 
-// [p]  | output
-// [t]  | error
-
-// [p]  | input  (piped && next)
-// [p2]  | output
-// [t]  | error
-
-// [p2]  | input (piped > !next)
-// [t]  | output
-// [t]  | error
-
 
 void execution(t_input *input_list, t_data *data)
 {
     t_input *tmp = input_list;
-    int command_status;
     int pipe_fd[2];
     int piped;
+    pid_t cmds_pids[10];
+    int index = 0;
 
     piped = 0;
     if(run_herdocs(tmp, data) != 0)
@@ -60,15 +49,13 @@ void execution(t_input *input_list, t_data *data)
     {
         if((*tmp->args))
         {
-            ft_pipe(pipe_fd, &piped, tmp); // pipe if there is a next cmd 
-            redir(tmp->redirect); // creat all files and change the FDs
-            command_status = is_builtin(tmp, data);
-            if (command_status == -1) // run the comand but all pipes are closed 
-                run_cmd(tmp, data, pipe_fd);
-            reset_fds(data);
+            cmds_pids[index] = run_cmd(tmp, data, pipe_fd, &piped);
         }
         tmp = tmp->next;
+        index++;
     }
+    for(int i = 0; i < index; i++)
+        waitpid(cmds_pids[i], NULL, 0);
 }
 
 void    reset_fds(t_data *data)
