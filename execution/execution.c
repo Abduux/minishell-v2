@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:08 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/28 11:43:43 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 16:56:34 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,12 @@ int   is_builtin(t_input *input) // returns 1 if the cmd is a built in
 
 int	run_a_builtin(t_input *input, t_data *data) // forks the minishell and excute the 
 {
-	if(ft_strncmp(*input->args, "exit", INT_MAX) == 0)
-		exit_shell(data, input);
-	pid_t child_pid = fork();
-	int status ;
-
-	if(child_pid == -1)
-		return (-1);
-	if(child_pid == 0)
-	{
-		redir(input->redirect);
-		status = excute_builtin(input, data);
-		exit(status);
-	}
-	return(child_pid);
+    if(!is_builtin(input))
+    {
+        return(-1);
+    }
+	int status = excute_builtin(input, data);
+	return(status);
 }
 
 int   excute_builtin(t_input *input, t_data *data)
@@ -61,12 +53,14 @@ int   excute_builtin(t_input *input, t_data *data)
     else if (ft_strncmp(*input->args, "export", CMD_LEN) == 0)
         return(export(input, data));
     else if (ft_strncmp(*input->args, "exit", CMD_LEN) == 0)
-        return(exit_shell(data, input));
+        return(exit_(data, input, 0));
     return (-1);
 }
 
 void execution(t_input *input_list, t_data *data)
 {
+	if (ft_strncmp(*input_list->args, "exit", CMD_LEN) == 0 && !input_list->next)
+        exit_(data, input_list, EXIT_MINISHELL);
     t_input *tmp = input_list;
     int pipe_fd[2];
     int piped;
@@ -82,12 +76,13 @@ void execution(t_input *input_list, t_data *data)
         if((*tmp->args))
         {
 			ft_pipe(pipe_fd, &piped, tmp);
-			if(is_builtin(tmp))
-				cmds_pids[index] = run_a_builtin(tmp, data);
-			else
-				cmds_pids[index] = run_cmd(tmp, data);
+            redir(tmp->redirect);
+			status = run_a_builtin(tmp, data);
+            if(status == -1)
+				cmds_pids[index++] = run_cmd(tmp, data);
+            else
+                set_exit_status(&data->env_list, status);
 			reset_fds(data);
-			index++;
         }
         tmp = tmp->next;
     }
@@ -99,26 +94,23 @@ void execution(t_input *input_list, t_data *data)
     handle_signals();
 }
 
+// int	run_a_builtin(t_input *input, t_data *data) // forks the minishell and excute the 
+// {
+// 	pid_t child_pid;
+// 	int status ;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// 	redir(input->redirect);
+    
+// 	child_pid = fork();
+// 	if(child_pid == -1)
+// 		return (-1);
+// 	if(child_pid == 0)
+// 	{
+//         status = excute_builtin(input, data);
+// 		exit(status);
+// 	}
+// 	return(child_pid);
+// }
 
 
 void    reset_fds(t_data *data)

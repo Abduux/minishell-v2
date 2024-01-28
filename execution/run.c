@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:16:41 by ali               #+#    #+#             */
-/*   Updated: 2024/01/28 11:41:58 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 16:25:45 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int run_cmd(t_input *input, t_data *data)
         return(ft_printf("minishell : could not fork\n"));
     if(pid == 0)
     {
-        redir(input->redirect);
+        // redir(input->redirect);
         execve(cmd_path, input->args, from_list_to_array(data->env_list));
         ft_printf("Execve : '%s'", cmd_path);
         free_exit(77, data, input);

@@ -62,6 +62,7 @@ void delete_env(t_env **head, const char *name)
 void increase_shlvl(t_env *list)
 {
     int current_value;
+
     while (list != NULL)
     {
         if (ft_strncmp(list->name, "SHLVL", INT_MAX) == 0)
@@ -74,4 +75,5 @@ void increase_shlvl(t_env *list)
         }
         list = list->next;
     }
+    //add it manually if not found
 }

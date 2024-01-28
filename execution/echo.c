@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:40:00 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/28 11:29:06 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 17:06:57 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ int	echo(char **args)
     }
     while (args[i])
     {
-        ft_putstr_fd(args[i], STDOUT_FILENO);
+        printf("%s", args[i]);
         if(ft_strlen(args[i]) > 0 && args[i + 1])
-            write(STDOUT_FILENO, " ", 1);
+            printf(" ");
         i++;
     }
     if(new_line == 1)
     {
-        write(STDOUT_FILENO, "\n", 1);
+        printf("\n");
     }
 	return (0);
 }
