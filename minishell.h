@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:13:51 by ali               #+#    #+#             */
-/*   Updated: 2024/01/28 02:43:21 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 08:47:21 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ extern int	g_signal;
 #define REDIR_HEREDOC 3
 #define REDIR_APPEND 4
 #define CMD_LEN 10
-// #define PROMPT ANSI_COLOR"Minishell v2.0$" ANSI_COLOR_RESET" ─> "
-#define PROMPT "╭─" ANSI_COLOR" Minishell v2.0$\n" ANSI_COLOR_RESET"╰────> "
+#define PROMPT ANSI_COLOR"Minishell v2.0$" ANSI_COLOR_RESET" ─> "
+// #define PROMPT "╭─" ANSI_COLOR" Minishell v2.0$\n"ANSI_COLOR_RESET"╰────> "
 
 //char* prompt = "╭─" ANSI_COLOR" Minishell v2.0$\n" ANSI_COLOR_RESET"╰────> ";
 // char* prompt = ANSI_COLOR" Minishell v2.0$" ANSI_COLOR_RESET" ─> ";
@@ -79,6 +79,7 @@ typedef struct s_data
 	int 			stderr;
 }	t_data;
 
+void    dont_quit(pid_t pid);
 int		set_exit_status(t_env **head, int exit_status);
 void	init_data(char **env, t_data *data);
 void	display_prompt(t_data *data);
@@ -93,7 +94,7 @@ int    open_herdocs(t_input *input, t_data *data);
 void    free_exit(unsigned char status, t_data *data, t_input *input);
 char**  env_to_array(t_env *env);
 
-int run_cmd(t_input *input, t_data *data, int *pipe_fd, int *piped);
+int run_cmd(t_input *input, t_data *data);
 
 int	to_join_values(char *key, int equal_index);
 void join_env(const char* key, const char* newvalue, t_data *data , int to_join);
@@ -150,7 +151,7 @@ int     add_export(t_env **head, const char *name, const char *value);
 void	delete_export(t_env **head, const char *name);
 void	increase_shlvl(t_env *list);
 void	free_env_list(t_env *head);
-int		echo(char **args, t_data *data);
+int		echo(char **args);
 int		cd(t_input cmd, t_data *data);
 int		pwd(void);
 int		env(t_env *env);

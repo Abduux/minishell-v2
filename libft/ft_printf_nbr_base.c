@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_nbr_base.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-akhd <mel-akhd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 23:19:08 by mel-akhd          #+#    #+#             */
-/*   Updated: 2023/02/18 17:40:38 by mel-akhd         ###   ########.fr       */
+/*   Updated: 2024/01/28 09:27:24 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_putnbr(char *base, unsigned long nbr, unsigned long baselong)
 	{
 		count += ft_putnbr(base, nbr / baselong, baselong);
 	}
-	ft_putchar_fd(base[nbr % baselong], 1);
+	ft_putchar_fd(base[nbr % baselong], STDERR_FILENO);
 	return (count);
 }
 
@@ -50,7 +50,7 @@ int	put_base_i(char *base, int i_decimal)
 	{
 		l_decimal *= -1;
 		is_minus++;
-		ft_putchar_fd('-', 1);
+		ft_putchar_fd('-', STDERR_FILENO);
 	}
 	return (ft_putnbr(base, l_decimal, base_len) + is_minus);
 }

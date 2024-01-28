@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 12:11:51 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/26 05:21:24 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 07:06:56 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char* cut_name(char *str , int *value_index)
     return (name);
 }
 
-void add_variable(char *str , t_data *data)
+int add_variable(char *str , t_data *data)
 {
     int     value_index;
     char    *name;
@@ -66,11 +66,15 @@ void add_variable(char *str , t_data *data)
     name = cut_name(str, &value_index);
     value = cutvalue(str , value_index);
     if (!valid_var_name(name))
-        ft_printf("minishell: export: `%s': not a valid identifier\n", str);
+    {
+        ft_printf("minishell: export: `%s': not a valid identifier\n", str); // carefull
+        return (1);
+    }
     else
         join_env(name, value, data, to_join_values(str, value_index));
     free(name);
     free(value);
+    return(0);
 }
 
 void    display_export(t_env *env)
@@ -80,10 +84,15 @@ void    display_export(t_env *env)
     tmp = env;
     while (tmp)
     {
-        printf("declare -x %s", tmp->name);
+        ft_putstr_fd("declare -x ", STDOUT_FILENO);
+        ft_putstr_fd(tmp->name, STDOUT_FILENO);
         if(tmp->value)
-            printf("=\"%s\"", tmp->value);
-        printf("\n");
+        {
+            write(STDOUT_FILENO, "=\"", 2);
+            write(STDOUT_FILENO, tmp->value, ft_strlen(tmp->value));
+            write(STDOUT_FILENO, "\"", 1);
+        }
+        write(1, "\n", 1);
         tmp = tmp->next;
     }
 }
@@ -91,6 +100,7 @@ void    display_export(t_env *env)
 int export(t_input *input, t_data *data)
 {
     int i;
+    int status;
 
     i = 1;
     if(arg_count(input->args) == 1)
@@ -99,9 +109,9 @@ int export(t_input *input, t_data *data)
     {
         while (input->args[i])
         {
-            add_variable(input->args[i], data);
+            status = add_variable(input->args[i], data);
             i++;
         }
     }
-    return (set_exit_status(&data->env_list, 0));
+    return (set_exit_status(&data->env_list, status));
 }

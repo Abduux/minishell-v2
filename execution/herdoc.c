@@ -6,11 +6,12 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 06:06:17 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 16:38:58 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 05:28:41 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <fcntl.h>
 
 void    the_mega_handler(pid_t signal)
 {
@@ -38,12 +39,6 @@ int    open_herdocs(t_input *input , t_data *data)
     return (0);
 }
 
-void    dont_quit(pid_t pid)
-{
-    (void) pid;
-    //printf("\n");
-}
-
 int    run_herdocs(t_input *inputs, t_data *data)
 {
     t_input *tmp;
@@ -69,6 +64,7 @@ int save_herdoc_data(t_redirection *herdoc, t_data *data, t_input *input)
 {
     pid_t   pid;
     int     status;
+    char    *line;
 
     if(pipe(herdoc->pipe) != 0)
         return (-1);
@@ -79,12 +75,12 @@ int save_herdoc_data(t_redirection *herdoc, t_data *data, t_input *input)
     {
         close(herdoc->pipe[0]); // close read end
         signal(SIGINT, the_mega_handler); // reset signal behavior
-        char *line = readline("> ");
+        line = readline("> ");
         while (ft_strncmp(line, herdoc->file_name, INT_MAX) != 0)
         {
             line = evaluate(line, data, IS_INSIDE_HERDOC); // Ark :: Added by me, just in case
             write(herdoc->pipe[1], line, ft_strlen(line));
-            write(herdoc->pipe[1], "\n", 2);
+            write(herdoc->pipe[1], "\n", 1);
             free(line);
             line = readline("> ");
         }
@@ -92,19 +88,15 @@ int save_herdoc_data(t_redirection *herdoc, t_data *data, t_input *input)
         close(herdoc->pipe[1]); // close write end after writing is complete 
         free_exit(0, data, input);
     }
-    else // parent -----------------------------------------
+    close(herdoc->pipe[1]); // close write end of the pipe;
+    if(waitpid(pid, &status, 0) == -1)// if an Error accured with (waitpid) return -1
     {
-        close(herdoc->pipe[1]); // close write end of the pipe;
-        // parent should wait for child 
-        if(waitpid(pid, &status, 0) == -1)// if an Error accured with (waitpid) return -1
-        {
             close(herdoc->pipe[0]);
             perror("waitpid");
             return (-1);
-        }
-        if(WEXITSTATUS(status) != 0) //if program exited wiht an error  should return -1 to cancel THE Prompt
-            return (-1);
     }
+    if(WEXITSTATUS(status) != 0) //if program exited wiht an error  should return -1 to cancel THE Prompt
+            return (-1);
     return (0); // if exit normaly continue and return 0
 }
 

@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 17:16:41 by ali               #+#    #+#             */
-/*   Updated: 2024/01/27 05:48:30 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 11:04:30 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char* get_cmd_path(const char *cmd, t_data *data)
     return (NULL);
 }
 
-int run_cmd(t_input *input, t_data *data, int *pipe_fd, int *piped)
+int run_cmd(t_input *input, t_data *data)
 {
     char*   cmd_path;
     pid_t   pid;
@@ -50,36 +50,17 @@ int run_cmd(t_input *input, t_data *data, int *pipe_fd, int *piped)
         ft_printf("%s: command not found\n", *(input->args));
         return (1);
     }
-    if(*piped == 1)
-    {
-        dup2(pipe_fd[0], STDIN_FILENO);
-        close(pipe_fd[0]);
-    }
-    if(input->next)
-    {
-        pipe(pipe_fd);
-        *piped = 1;
-    }
     pid = fork();
     if(pid == -1)
         return(ft_printf("minishell : could not fork\n"));
     if(pid == 0)
     {
-        dup2(pipe_fd[1], STDOUT_FILENO);
-        close(pipe_fd[1]);
-        close(pipe_fd[0]);
-        redir(input->redirect);
         execve(cmd_path, input->args, from_list_to_array(data->env_list));
-        ft_printf("Error Excuting : '%s'", cmd_path);
-        free_exit(0, data, input);
+        ft_printf("Execve : '%s'", cmd_path);
+        free_exit(77, data, input);
     }
-    else 
-    {
-        close(pipe_fd[1]);
-        reset_fds(data);
-    }
+    add_env(&data->env_list, "_", cmd_path);
     free(cmd_path);
     return (pid);
-    
 }
 

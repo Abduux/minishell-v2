@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 18:28:42 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/26 02:13:31 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 09:40:32 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int is_numric(char *str)
     i = 0;
     if(!str || !ft_strlen(str))
         return (0);
+    if(str[i] == '-' || str[i] == '+')
+        i++;
     while (str[i])
         if(!ft_isdigit(str[i++]))
             return (0);
@@ -38,25 +40,29 @@ int    exit_shell(t_data *data, t_input *input)
 {
     int count;
     int isdigit;
+    int status;
 
     count = arg_count(input->args);
     isdigit = is_numric(input->args[1]);
     printf("exit\n");
     if(count == 1)
-        free_exit(0 , data, input); // should exit with the last exit status 
+    {
+        status = atoi(get_value_from_env("?", data->env_list)); // should exit with the last exit status 
+        free_exit(status , data, input);
+    }
     else
     {
         if((isdigit && count == 2)) // when used normally 1 number
             free_exit(ft_atoi(input->args[1]), data, input);
         else if(!isdigit)
         {
-            printf("minishell: exit: %s: numeric argument required\n", input->args[1]);
-            free_exit(0 , data, input); // should check the exit value of this 1
+            ft_printf("minishell: exit: %s: numeric argument required\n", input->args[1]);
+            free_exit(2 , data, input); // should check the exit value of this 1
         }
         else
-            printf("minishell: exit: too many arguments");
+            ft_printf("minishell: exit: too many arguments");
     }
-    return (0);
+    return (1);
 }
 
     //if the first argument is not a number 

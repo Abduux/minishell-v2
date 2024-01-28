@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 18:33:20 by ali               #+#    #+#             */
-/*   Updated: 2024/01/26 03:20:42 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 11:29:23 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ int    redir(t_redirection *redirections)
         }
         else if (redir->type == REDIR_INPUT)
         {
-            if (access(redir->file_name , F_OK) != 0)
-                return(ft_printf("Minishell: %s: No such file or directory\n", redir->file_name));
-            if (access(redir->file_name, X_OK) != 0)
-                return(ft_printf("Minishell: %s: Permission denied\n", redir->file_name));
+            if (access(redir->file_name , F_OK) != 0){
+                ft_printf("Minishell: %s: No such file or directory\n", redir->file_name);
+            }
             redirect_fd = open(redir->file_name , O_RDONLY);
             if(redirect_fd != -1)
                 change_stdio(redirect_fd, STDIN_FILENO);
@@ -58,23 +57,3 @@ int    redir(t_redirection *redirections)
     }
     return (0);
 }
-
-
-
-// cmd > slkjdf < slkjdflk > slkjdflk >> lsjkdf << her << another | sldjf lk
-
-
-
-// [0] -> her pip[0] 
-// [1] -> lsjkdf 
-// [2] -> terminal 
-
-// echo hello > file.txt > anothe.txt
-
-
-
-// lien = readline()
-// {
-//     line = signal = sigint; 
-//     return *
-// } 

@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 07:39:54 by ahraich           #+#    #+#             */
-/*   Updated: 2024/01/21 02:05:02 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 10:18:26 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,23 @@ int	change_dir(const char* path_name, t_data *data)
 
 	getcwd(olddir, PATH_MAX);
 	if (access(path_name , F_OK) != 0)
-		printf("minishell: cd: %s: No such file or directory\n", path_name);
-	else if (access(path_name, X_OK) != 0)
-		printf("minishell: cd: %s: Permission denied\n", path_name);
-	else
 	{
-		if(chdir(path_name) != 0)
-			return (printf("Could not change to the  given path ! \n"));
-		add_env(&data->env_list, "OLDPWD", olddir);
-		add_export(&data->export_list, "OLDPWD", olddir);
-		getcwd(olddir, PATH_MAX);
-		add_env(&data->env_list, "PWD", olddir);
-		add_export(&data->export_list, "PWD", olddir);
+		ft_printf("minishell: cd: %s: No such file or directory\n", path_name);
+		return (1);
 	}
-	return (1);
+	else if (access(path_name, X_OK) != 0)
+	{
+		ft_printf("minishell: cd: %s: Permission denied\n", path_name);
+		return(1);
+	}
+	chdir(path_name);
+	add_env(&data->env_list, "OLDPWD", olddir);
+	add_export(&data->export_list, "OLDPWD", olddir);
+	getcwd(olddir, PATH_MAX);
+	add_env(&data->env_list, "PWD", olddir);
+	add_export(&data->export_list, "PWD", olddir);
+	return (0);
 }
-
 
 int	cd(t_input cmd, t_data *data)
 {
@@ -44,13 +45,19 @@ int	cd(t_input cmd, t_data *data)
 	{
 		newdir =  get_value_from_env("HOME" , data->env_list); // get the home value to navigate to it 
 		if(!newdir)
-			printf("minishell: cd: HOME not set\n"); // if the HOME variable not set
+		{
+			ft_printf("minishell: cd: HOME not set\n"); // if the HOME variable not set
+			return (1);
+		}
 		else
-			change_dir(newdir, data); // if it set
+			return(change_dir(newdir, data)); // if it set
 	}
 	else if (arg_count(cmd.args) > 2)
-		printf("minishell: cd: too many arguments\n");
+	{
+		ft_printf("minishell: cd: too many arguments\n");
+		return (1);
+	}
 	else
-		change_dir(cmd.args[1], data);
+		return(change_dir(cmd.args[1], data));
 	return (0);
 }

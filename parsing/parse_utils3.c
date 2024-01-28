@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-akhd <mel-akhd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 17:27:49 by mel-akhd          #+#    #+#             */
-/*   Updated: 2023/12/02 21:45:52 by mel-akhd         ###   ########.fr       */
+/*   Updated: 2024/01/28 04:43:45 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void print_env_list(t_env *env)
 {
 	while (env)
 	{
-		printf("%s=%s\n", env->name, env->value);
+		if(strncmp(env->name, "?", INT_MAX) != 0)
+			printf("%s=%s\n", env->name, env->value);
 		env = env->next;
 	}
 }

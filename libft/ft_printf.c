@@ -6,7 +6,7 @@
 /*   By: ali <ali@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 23:19:11 by mel-akhd          #+#    #+#             */
-/*   Updated: 2024/01/25 20:31:38 by ali              ###   ########.fr       */
+/*   Updated: 2024/01/28 09:33:11 by ali              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	ft_printf(const char *format, ...)
 
 	count = 0;
 	va_start(print_args, format);
-	// write(STDERR_FILENO, "\033[31mError: \033[0m", 17);
-	write(STDERR_FILENO, "\033[31m", 6);
 	while (*format)
 	{
 		if (*format != '%')
@@ -58,7 +56,6 @@ int	ft_printf(const char *format, ...)
 		if (*format)
 			format++;
 	}
-	write(STDERR_FILENO, "\033[0m", 5);
 	va_end(print_args);
 	return (count);
 }
